@@ -17,7 +17,7 @@ local player = Players.LocalPlayer
 local humanoid
 local infiniteJump = false
 
-local NORMAL_SPEED = 16
+local NORMAL_SPEED = 20
 local RUN_SPEED = 150
 
 local function setupCharacter(char)
@@ -115,7 +115,7 @@ local Mouse = LocalPlayer:GetMouse()
 -- SETTINGS
 local AIM_KEY = Enum.UserInputType.MouseButton2
 local FOV_RADIUS = 500
-local MAX_DISTANCE = 350
+local MAX_DISTANCE = 500
 local SMOOTHNESS = 1.5
 local AIM_PART = "HumanoidRootPart"
 
@@ -396,6 +396,7 @@ UserInputService.InputBegan:Connect(function(input, gp)
 		update(5)
 	end
 end)
+
 
 
 
