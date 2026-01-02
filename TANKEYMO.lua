@@ -1,27 +1,69 @@
 -- 🔑 KEY ที่ถูกต้อง
-local CorrectKey = "TANKEYMO"--Key
+local CorrectKey = "TANKEYMO"
 
--- 🧠 รับ key จากผู้ใช้
-getgenv().Key = getgenv().Key or ""
-
-if getgenv().Key ~= CorrectKey then
-	game.Players.LocalPlayer:Kick("❌ Key ไม่ถูกต้อง")
-	return
-end
-
-local stgui = game:GetService("StarterGui")
-if not getgenv().DisableNotification then
-	stgui:SetCore("SendNotification", {
-		Title = "Sprite&Best",
-		Icon = "rbxassetid://122816576385645",
-		Text = "KEYMO HUB",
-		Duration = 10,
-		Button1 = "Dismiss",
-		Callback = function() end
-	})
-end
+-- กันรันซ้ำ
+if getgenv().KeyPassed then return end
 
 local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- สร้าง GUI
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.ResetOnSpawn = false
+
+local Frame = Instance.new("Frame")
+Frame.Parent = ScreenGui
+Frame.Size = UDim2.new(0, 300, 0, 170)
+Frame.Position = UDim2.new(0.5, -150, 0.5, -85)
+Frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+Frame.BorderSizePixel = 0
+Frame.Active = true
+Frame.Draggable = true
+
+local UICorner = Instance.new("UICorner", Frame)
+
+local Title = Instance.new("TextLabel")
+Title.Parent = Frame
+Title.Size = UDim2.new(1,0,0,40)
+Title.Text = "🔑 KEY SYSTEM"
+Title.TextColor3 = Color3.new(1,1,1)
+Title.BackgroundTransparency = 1
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 18
+
+local TextBox = Instance.new("TextBox")
+TextBox.Parent = Frame
+TextBox.Size = UDim2.new(1,-40,0,35)
+TextBox.Position = UDim2.new(0,20,0,60)
+TextBox.PlaceholderText = "ใส่ Key ที่นี่"
+TextBox.Text = ""
+TextBox.Font = Enum.Font.Gotham
+TextBox.TextSize = 14
+TextBox.BackgroundColor3 = Color3.fromRGB(45,45,45)
+TextBox.TextColor3 = Color3.new(1,1,1)
+Instance.new("UICorner", TextBox)
+
+local Button = Instance.new("TextButton")
+Button.Parent = Frame
+Button.Size = UDim2.new(1,-40,0,35)
+Button.Position = UDim2.new(0,20,0,105)
+Button.Text = "ยืนยัน Key"
+Button.Font = Enum.Font.GothamBold
+Button.TextSize = 14
+Button.BackgroundColor3 = Color3.fromRGB(0,170,255)
+Button.TextColor3 = Color3.new(1,1,1)
+Instance.new("UICorner", Button)
+
+-- ตรวจสอบ Key
+Button.MouseButton1Click:Connect(function()
+	if TextBox.Text == CorrectKey then
+		getgenv().KeyPassed = true
+		ScreenGui:Destroy()
+
+		--------------------------------
+		-- 🔥 ใส่สคริปหลักของคุณตรงนี้
+			local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 
 local player = Players.LocalPlayer
@@ -405,6 +447,15 @@ UserInputService.InputBegan:Connect(function(input, gp)
 	elseif input.KeyCode == Enum.KeyCode.Y then
 		states[5] = not states[5]
 		update(5)
+	end
+end)
+
+		--------------------------------
+
+	else
+		Button.Text = "❌ Key ไม่ถูกต้อง"
+		wait(1)
+		Button.Text = "ยืนยัน Key"
 	end
 end)
 
