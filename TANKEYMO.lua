@@ -26,7 +26,7 @@ local UICorner = Instance.new("UICorner", Frame)
 local Title = Instance.new("TextLabel")
 Title.Parent = Frame
 Title.Size = UDim2.new(1,0,0,40)
-Title.Text = "🔑 KEY SYSTEM"
+Title.Text = "KEYMO HUB"
 Title.TextColor3 = Color3.new(1,1,1)
 Title.BackgroundTransparency = 1
 Title.Font = Enum.Font.GothamBold
@@ -359,7 +359,7 @@ gui.Parent = player:WaitForChild("PlayerGui")
 
 local frame = Instance.new("Frame")
 frame.Size = UDim2.new(0, 300, 0, 250)
-frame.Position = UDim2.new(0.4, 0, 0.35, 0)
+frame.Position = UDim2.new(0, 0, 0, 0)
 frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 frame.Active = true
 frame.Visible = true
@@ -458,6 +458,7 @@ end)
 		Button.Text = "🔑 ยืนยัน KEY"
 	end
 end)
+
 
 
 
