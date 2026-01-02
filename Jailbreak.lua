@@ -388,11 +388,12 @@ UserInputService.InputBegan:Connect(function(input, gp)
 		states[4] = not states[4]
 		update(4)
 
-	elseif nput.KeyCode == Enum.KeyCode.RightShift then
+	elseif input.KeyCode == Enum.KeyCode.RightShift then
 		states[5] = not states[5]
 		update(5)
 	end
 end)
+
 
 
 
