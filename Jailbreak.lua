@@ -197,7 +197,7 @@ local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = Players.LocalPlayer
 
-local ESP_ENABLED = true
+local ESP_ENABLED = false
 local ESP_LIST = {}
 
 -- สร้าง ESP
@@ -393,6 +393,7 @@ UserInputService.InputBegan:Connect(function(input, gp)
 		update(5)
 	end
 end)
+
 
 
 
