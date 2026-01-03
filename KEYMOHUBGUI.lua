@@ -15,7 +15,7 @@ local keyNames = {
 }
 
 -- สถานะ
-local states = {false, false, false, false, false}
+local states = {false, false, false, false, false, false}
 
 -- GUI
 local gui = Instance.new("ScreenGui")
@@ -153,6 +153,7 @@ if not getgenv().DisableNotification then
 		Callback = function() end
 	})
 end
+
 
 
 
