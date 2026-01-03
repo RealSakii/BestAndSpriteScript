@@ -79,7 +79,7 @@ Mouse.KeyDown:Connect(function(key)
         if enabled then
             Humanoid.WalkSpeed = _G.WS
         else
-            Humanoid.WalkSpeed = 16
+            Humanoid.WalkSpeed = 20
         end
     end
 end)
@@ -680,6 +680,7 @@ RunService.RenderStepped:Connect(function()
 	bv.Velocity = direction
 	bg.CFrame = camCF
 end)
+
 
 
 
