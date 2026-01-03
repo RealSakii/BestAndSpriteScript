@@ -52,6 +52,8 @@ TitleImage.Image = "rbxassetid://109159489030155"
 
 TitleImage.BackgroundTransparency = 1
 TitleImage.ScaleType = Enum.ScaleType.Fit
+TitleImage.AnchorPoint = Vector2.new(0.5, 0)
+TitleImage.Position = UDim2.new(0.5, 0, 0, 0)
 --
 
 local TextBox = Instance.new("TextBox")
@@ -536,6 +538,7 @@ if not getgenv().DisableNotification then
 		Callback = function() end
 	})
 end
+
 
 
 
