@@ -42,14 +42,29 @@ local UICorner = Instance.new("UICorner")
 UICorner.CornerRadius = UDim.new(0, 12)
 UICorner.Parent = Frame
 
-local Title = Instance.new("TextLabel")
-Title.Parent = Frame
-Title.Size = UDim2.new(1,0,0,40)
-Title.Text = "KEYMO HUB"
-Title.TextColor3 = Color3.new(0,170,255)
-Title.BackgroundTransparency = 1
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 18
+local TitleImage = Instance.new("ImageLabel")
+TitleImage.Parent = Frame
+TitleImage.Size = UDim2.new(1, 0, 0, 40)
+TitleImage.Position = UDim2.new(0, 0, 0, 0)
+
+-- ใส่ Image ID ของคุณตรงนี้
+TitleImage.Image = "rbxassetid://109159489030155"
+
+TitleImage.BackgroundTransparency = 1
+TitleImage.ScaleType = Enum.ScaleType.Fit
+--
+
+local TextBox = Instance.new("TextBox")
+TextBox.Parent = Frame
+TextBox.Size = UDim2.new(1,-40,0,35)
+TextBox.Position = UDim2.new(0,20,0,60)
+TextBox.PlaceholderText = "ใส่ Key ที่นี่"
+TextBox.Text = ""
+TextBox.Font = Enum.Font.Gotham
+TextBox.TextSize = 14
+TextBox.BackgroundColor3 = Color3.fromRGB(45,45,45)
+TextBox.TextColor3 = Color3.new(1,1,1)
+Instance.new("UICorner", TextBox)
 
 local Button = Instance.new("TextButton")
 Button.Parent = Frame
@@ -521,6 +536,7 @@ if not getgenv().DisableNotification then
 		Callback = function() end
 	})
 end
+
 
 
 
