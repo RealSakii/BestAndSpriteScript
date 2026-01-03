@@ -10,7 +10,8 @@ local keyNames = {
 	[2] = "กระโดดสูง(B)",
 	[3] = "วาร์ป(T)",
 	[4] = "Lock On(M3)",
-	[5] = "Attach Follow(H)"
+	[5] = "Attach Follow(H)",
+	[6] = "ESP Box(P)"
 }
 
 -- สถานะ
@@ -65,7 +66,7 @@ title.Parent = frame
 -- labels
 local labels = {}
 
-for i = 1, 5 do
+for i = 1, 6 do
 	local label = Instance.new("TextLabel")
 	label.Size = UDim2.new(0.9, 0, 0, 30)
 	label.Position = UDim2.new(0.05, 0, 0, 40 + (i * 35))
@@ -131,6 +132,10 @@ UserInputService.InputBegan:Connect(function(input, gp)
 	elseif input.KeyCode == Enum.KeyCode.H then
 		states[5] = not states[5]
 		update(5)
+
+	elseif input.KeyCode == Enum.KeyCode.P then
+		states[6] = not states[6]
+		update(6)
 	end
 end)
 
@@ -148,6 +153,7 @@ if not getgenv().DisableNotification then
 		Callback = function() end
 	})
 end
+
 
 
 
