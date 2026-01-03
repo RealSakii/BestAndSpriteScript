@@ -54,14 +54,14 @@ UICorner.CornerRadius = UDim.new(0, 12)
 UICorner.Parent = Frame
 
 -- 🔵 โลโก้ KEYMOHUB (ImageLabel)
-local Title = Instance.new("TextLabel")
-Title.Parent = Frame
-Title.Size = UDim2.new(1,0,0,40)
-Title.Text = "KEYMOHUB"
-Title.TextColor3 = Color3.new(0,170,255)
-Title.BackgroundTransparency = 1
-Title.Font = Enum.Font.GothamBold
-Title.TextSize = 18
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 40)
+title.BackgroundTransparency = 1
+title.Text = "KEYMOHUB"
+title.TextColor3 = Color3.fromRGB(0,170,255)
+title.Font = Enum.Font.GothamBold
+title.TextScaled = true
+title.Parent = frame
 -- labels
 local labels = {}
 
@@ -148,6 +148,7 @@ if not getgenv().DisableNotification then
 		Callback = function() end
 	})
 end
+
 
 
 
