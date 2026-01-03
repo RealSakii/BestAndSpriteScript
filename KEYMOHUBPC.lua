@@ -527,7 +527,7 @@ local function CreateESP(player)
 	nameText.Size = 14
 	nameText.Center = true
 	nameText.Outline = true
-	nameText.Font = 2
+	nameText.Font = Enum.Font.GothamBold
 	nameText.Visible = false
 	nameText.Text = player.Name
 
@@ -645,6 +645,7 @@ if not getgenv().DisableNotification then
 		Callback = function() end
 	})
 end
+
 
 
 
