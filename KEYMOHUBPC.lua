@@ -7,21 +7,24 @@ if getgenv().KeyPassed then return end
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
--- สร้าง GUI
+-- สร้าง ScreenGui
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
-ScreenGui.ResetOnSpawn = false
+ScreenGui.Name = "KEYMOHUB_GUI"
+ScreenGui.Parent = game:GetService("CoreGui")
 
+-- สร้าง Frame
 local Frame = Instance.new("Frame")
 Frame.Parent = ScreenGui
-Frame.Size = UDim2.new(0, 300, 0, 170)
-Frame.Position = UDim2.new(0.5, -150, 0.5, -85)
-Frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+Frame.Size = UDim2.new(0, 350, 0, 200)
+Frame.Position = UDim2.new(0.5, -175, 0.5, -100)
+Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 Frame.BorderSizePixel = 0
-Frame.Active = true
-Frame.Draggable = true
+Frame.ZIndex = 1
 
-local UICorner = Instance.new("UICorner", Frame)
+-- มุมโค้ง
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = Frame
 
 local Title = Instance.new("TextLabel")
 Title.Parent = Frame
@@ -31,12 +34,13 @@ Title.TextColor3 = Color3.new(0,170,255)
 Title.BackgroundTransparency = 1
 Title.Font = Enum.Font.GothamBold
 Title.TextSize = 18
+--
 
 local TextBox = Instance.new("TextBox")
 TextBox.Parent = Frame
 TextBox.Size = UDim2.new(1,-40,0,35)
 TextBox.Position = UDim2.new(0,20,0,60)
-TextBox.PlaceholderText = "ใส่ KEY ที่นี่"
+TextBox.PlaceholderText = "ใส่ Key ที่นี่"
 TextBox.Text = ""
 TextBox.Font = Enum.Font.GothamBold
 TextBox.TextSize = 14
@@ -625,6 +629,7 @@ if not getgenv().DisableNotification then
 		Callback = function() end
 	})
 end
+
 
 
 
