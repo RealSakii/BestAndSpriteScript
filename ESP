@@ -1,4 +1,4 @@
---// ESP Box + Name + Distance + Health + Team Color (AUTO UPDATE)
+--// GREEN ESP (WORKING VERSION)
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -7,88 +7,82 @@ local Camera = workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
 local ESP = {}
-local ESP_ENABLED = false
+local ESP_ENABLED = true
+local ESP_COLOR = Color3.fromRGB(0,170,255)
 
-local TEAM_COLOR_FRIEND = Color3.fromRGB(0, 255, 0)
-local TEAM_COLOR_ENEMY  = Color3.fromRGB(255,80,80)
-local HEALTH_BG_COLOR   = Color3.fromRGB(40,40,40)
-local HEALTH_COLOR      = Color3.fromRGB(0,255,0)
-
--- สร้าง ESP
+-- Create ESP
 local function CreateESP(player)
-	if player == LocalPlayer then return end
-	if ESP[player] then return end
+	if player == LocalPlayer or ESP[player] then return end
 
 	local box = Drawing.new("Square")
+	box.Color = ESP_COLOR
 	box.Thickness = 2
 	box.Filled = false
 	box.Visible = false
 
-	local nameText = Drawing.new("Text")
-	nameText.Size = 14
-	nameText.Center = true
-	nameText.Outline = true
-	nameText.Font = 2
-	nameText.Visible = false
+	local name = Drawing.new("Text")
+	name.Color = ESP_COLOR
+	name.Size = 14
+	name.Center = true
+	name.Outline = true
+	name.Font = 2
+	name.Visible = false
 
-	local distanceText = Drawing.new("Text")
-	distanceText.Size = 13
-	distanceText.Center = true
-	distanceText.Outline = true
-	distanceText.Font = 2
-	distanceText.Visible = false
+	local distText = Drawing.new("Text")
+	distText.Color = ESP_COLOR
+	distText.Size = 13
+	distText.Center = true
+	distText.Outline = true
+	distText.Font = 2
+	distText.Visible = false
 
 	local hpBg = Drawing.new("Square")
+	hpBg.Color = Color3.fromRGB(40,40,40)
 	hpBg.Filled = true
 	hpBg.Visible = false
-	hpBg.Color = HEALTH_BG_COLOR
 
-	local hpBar = Drawing.new("Square")
-	hpBar.Filled = true
-	hpBar.Visible = false
-	hpBar.Color = HEALTH_COLOR
+	local hp = Drawing.new("Square")
+	hp.Color = Color3.fromRGB(0,255,0)
+	hp.Filled = true
+	hp.Visible = false
 
-	ESP[player] = {
-		Box = box,
-		Name = nameText,
-		Distance = distanceText,
-		HPBg = hpBg,
-		HP = hpBar
-	}
+	ESP[player] = {box, name, distText, hpBg, hp}
 end
 
--- ลบ ESP
+-- Remove ESP
 local function RemoveESP(player)
 	if ESP[player] then
-		for _, v in pairs(ESP[player]) do
-			v:Remove()
+		for _, d in ipairs(ESP[player]) do
+			pcall(function() d:Remove() end)
 		end
 		ESP[player] = nil
 	end
 end
 
--- Toggle ESP (P)
-UserInputService.InputBegan:Connect(function(input, gp)
+-- Toggle (P)
+UserInputService.InputBegan:Connect(function(i,gp)
 	if gp then return end
-	if input.KeyCode == Enum.KeyCode.P then
+	if i.KeyCode == Enum.KeyCode.P then
 		ESP_ENABLED = not ESP_ENABLED
 	end
 end)
 
--- ตรวจผู้เล่นใหม่ตลอดเวลา
+-- Auto create
 RunService.Heartbeat:Connect(function()
-	for _, player in ipairs(Players:GetPlayers()) do
-		if player ~= LocalPlayer and not ESP[player] then
-			CreateESP(player)
+	for _, p in ipairs(Players:GetPlayers()) do
+		if not ESP[p] and p ~= LocalPlayer then
+			CreateESP(p)
 		end
 	end
 end)
 
--- อัปเดต ESP
+-- Update
 RunService.RenderStepped:Connect(function()
-	for player, esp in pairs(ESP) do
+	for player, d in pairs(ESP) do
+		local box,name,distText,hpBg,hp = unpack(d)
+
 		if not ESP_ENABLED then
-			for _, v in pairs(esp) do v.Visible = false end
+			box.Visible=false name.Visible=false distText.Visible=false hpBg.Visible=false hp.Visible=false
 			continue
 		end
 
@@ -97,68 +91,40 @@ RunService.RenderStepped:Connect(function()
 		local hum = char and char:FindFirstChildOfClass("Humanoid")
 		local lhrp = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
 
-		if hrp and hum and hum.Health > 0 and lhrp then
-			local pos, onScreen = Camera:WorldToViewportPoint(hrp.Position)
-
+		if hrp and hum and hum.Health>0 and lhrp then
+			local pos,onScreen = Camera:WorldToViewportPoint(hrp.Position)
 			if onScreen then
-				local scale = math.clamp(3000 / pos.Z, 25, 300)
-				local size = Vector2.new(scale, scale * 1.5)
+				local scale = math.clamp(3000/pos.Z,25,300)
+				local size = Vector2.new(scale,scale*1.5)
 
-				-- Team Color
-				local isFriend = player.Team == LocalPlayer.Team
-				local color = isFriend and TEAM_COLOR_FRIEND or TEAM_COLOR_ENEMY
+				box.Size=size
+				box.Position=Vector2.new(pos.X-size.X/2,pos.Y-size.Y/2)
+				box.Visible=true
 
-				-- Box
-				esp.Box.Color = color
-				esp.Box.Size = size
-				esp.Box.Position = Vector2.new(pos.X - size.X/2, pos.Y - size.Y/2)
-				esp.Box.Visible = true
+				name.Text=player.Name
+				name.Position=Vector2.new(pos.X,pos.Y-size.Y/2-26)
+				name.Visible=true
 
-				-- Name
-				esp.Name.Text = player.Name
-				esp.Name.Color = color
-				esp.Name.Position = Vector2.new(pos.X, pos.Y - size.Y/2 - 28)
-				esp.Name.Visible = true
+				local dist = math.floor((lhrp.Position-hrp.Position).Magnitude)
+				distText.Text=dist.." m"
+				distText.Position=Vector2.new(pos.X,pos.Y+size.Y/2+2)
+				distText.Visible=true
 
-				-- Distance
-				local dist = math.floor((lhrp.Position - hrp.Position).Magnitude)
-				esp.Distance.Text = dist .. " m"
-				esp.Distance.Color = color
-				esp.Distance.Position = Vector2.new(pos.X, pos.Y + size.Y/2 + 2)
-				esp.Distance.Visible = true
+				local hpPercent = hum.Health/hum.MaxHealth
+				hpBg.Size=Vector2.new(4,size.Y)
+				hpBg.Position=Vector2.new(pos.X-size.X/2-8,pos.Y-size.Y/2)
+				hpBg.Visible=true
 
-				-- Health Bar
-				local hpPercent = math.clamp(hum.Health / hum.MaxHealth, 0, 1)
-				local barHeight = size.Y * hpPercent
-
-				esp.HPBg.Size = Vector2.new(4, size.Y)
-				esp.HPBg.Position = Vector2.new(pos.X - size.X/2 - 8, pos.Y - size.Y/2)
-				esp.HPBg.Visible = true
-
-				esp.HP.Size = Vector2.new(4, barHeight)
-				esp.HP.Position = Vector2.new(
-					pos.X - size.X/2 - 8,
-					pos.Y + size.Y/2 - barHeight
-				)
-				esp.HP.Visible = true
+				hp.Size=Vector2.new(4,size.Y*hpPercent)
+				hp.Position=Vector2.new(pos.X-size.X/2-8,pos.Y+size.Y/2-hp.Size.Y)
+				hp.Visible=true
 			else
-				for _, v in pairs(esp) do v.Visible = false end
+				box.Visible=false name.Visible=false distText.Visible=false hpBg.Visible=false hp.Visible=false
 			end
 		else
-			for _, v in pairs(esp) do v.Visible = false end
+			box.Visible=false name.Visible=false distText.Visible=false hpBg.Visible=false hp.Visible=false
 		end
 	end
 end)
 
--- โหลดผู้เล่นเดิม
-for _, player in ipairs(Players:GetPlayers()) do
-	CreateESP(player)
-	player.CharacterAdded:Connect(function()
-		task.wait(0.5)
-		CreateESP(player)
-	end)
-end
-
 Players.PlayerRemoving:Connect(RemoveESP)
-
---
