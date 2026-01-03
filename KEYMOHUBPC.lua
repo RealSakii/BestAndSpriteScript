@@ -68,6 +68,9 @@ Button.MouseButton1Click:Connect(function()
 		--------------------------------
 		-- 🔥 ใส่สคริปหลักของคุณตรงนี้
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/RealSakii/BestAndSpriteScript/refs/heads/main/Functions"))()
+			--
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/RealSakii/BestAndSpriteScript/refs/heads/main/ESP"))()
+			--
 			loadstring(game:HttpGet("https://raw.githubusercontent.com/RealSakii/BestAndSpriteScript/refs/heads/main/Status"))()
 		--------------------------------
 
@@ -90,6 +93,7 @@ if not getgenv().DisableNotification then
 		Callback = function() end
 	})
 end
+
 
 
 
