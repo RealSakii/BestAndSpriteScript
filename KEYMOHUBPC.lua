@@ -23,25 +23,6 @@ Frame.Draggable = true
 
 local UICorner = Instance.new("UICorner", Frame)
 
--- สร้าง ScreenGui
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "KEYMOHUB_GUI"
-ScreenGui.Parent = game:GetService("CoreGui")
-
--- สร้าง Frame
-local Frame = Instance.new("Frame")
-Frame.Parent = ScreenGui
-Frame.Size = UDim2.new(0, 350, 0, 200)
-Frame.Position = UDim2.new(0.5, -175, 0.5, -100)
-Frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-Frame.BorderSizePixel = 0
-Frame.ZIndex = 1
-
--- มุมโค้ง
-local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(0, 12)
-UICorner.Parent = Frame
-
 local Title = Instance.new("TextLabel")
 Title.Parent = Frame
 Title.Size = UDim2.new(1,0,0,40)
@@ -50,13 +31,12 @@ Title.TextColor3 = Color3.new(0,170,255)
 Title.BackgroundTransparency = 1
 Title.Font = Enum.Font.GothamBold
 Title.TextSize = 18
---
 
 local TextBox = Instance.new("TextBox")
 TextBox.Parent = Frame
 TextBox.Size = UDim2.new(1,-40,0,35)
 TextBox.Position = UDim2.new(0,20,0,60)
-TextBox.PlaceholderText = "ใส่ Key ที่นี่"
+TextBox.PlaceholderText = "ใส่ KEY ที่นี่"
 TextBox.Text = ""
 TextBox.Font = Enum.Font.GothamBold
 TextBox.TextSize = 14
@@ -645,6 +625,7 @@ if not getgenv().DisableNotification then
 		Callback = function() end
 	})
 end
+
 
 
 
